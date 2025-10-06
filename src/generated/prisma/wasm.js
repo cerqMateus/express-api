@@ -105,7 +105,8 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   username: 'username',
   password: 'password',
-  role: 'role'
+  role: 'role',
+  googleId: 'googleId'
 };
 
 exports.Prisma.RoleRequestScalarFieldEnum = {
@@ -123,6 +124,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.Role = exports.$Enums.Role = {
   READER: 'READER',
@@ -188,13 +194,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum Role {\n  READER\n  WRITER\n  ADMIN\n}\n\nmodel Article {\n  id        Int      @id @default(autoincrement())\n  title     String\n  content   String\n  createdAt DateTime @default(now())\n  Author    User     @relation(fields: [authorId], references: [id])\n  authorId  Int\n}\n\nmodel User {\n  id       Int           @id @default(autoincrement())\n  email    String        @unique\n  username String\n  password String\n  role     Role          @default(READER)\n  articles Article[]\n  requests RoleRequest[]\n}\n\nenum RoleRequestStatus {\n  PENDING\n  ACCEPTED\n  REJECTED\n}\n\nmodel RoleRequest {\n  id     Int               @id @default(autoincrement())\n  role   Role\n  userId Int\n  user   User              @relation(fields: [userId], references: [id])\n  status RoleRequestStatus @default(PENDING)\n}\n",
-  "inlineSchemaHash": "b02d2bf1a0f534fc58d8f0ba4ab0814b09f38e156a74c2587900813fef958f98",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum Role {\n  READER\n  WRITER\n  ADMIN\n}\n\nmodel Article {\n  id        Int      @id @default(autoincrement())\n  title     String\n  content   String\n  createdAt DateTime @default(now())\n  Author    User     @relation(fields: [authorId], references: [id])\n  authorId  Int\n}\n\nmodel User {\n  id       Int           @id @default(autoincrement())\n  email    String        @unique\n  username String\n  password String\n  role     Role          @default(READER)\n  googleId String?       @unique\n  articles Article[]\n  requests RoleRequest[]\n}\n\nenum RoleRequestStatus {\n  PENDING\n  ACCEPTED\n  REJECTED\n}\n\nmodel RoleRequest {\n  id     Int               @id @default(autoincrement())\n  role   Role\n  userId Int\n  user   User              @relation(fields: [userId], references: [id])\n  status RoleRequestStatus @default(PENDING)\n}\n",
+  "inlineSchemaHash": "9a0f1ebb0d57145b34a3c83156518a286e527908dc899480a8ed06ef73da6cdb",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Article\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Author\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ArticleToUser\"},{\"name\":\"authorId\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"articles\",\"kind\":\"object\",\"type\":\"Article\",\"relationName\":\"ArticleToUser\"},{\"name\":\"requests\",\"kind\":\"object\",\"type\":\"RoleRequest\",\"relationName\":\"RoleRequestToUser\"}],\"dbName\":null},\"RoleRequest\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"RoleRequestToUser\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"RoleRequestStatus\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Article\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Author\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ArticleToUser\"},{\"name\":\"authorId\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"googleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"articles\",\"kind\":\"object\",\"type\":\"Article\",\"relationName\":\"ArticleToUser\"},{\"name\":\"requests\",\"kind\":\"object\",\"type\":\"RoleRequest\",\"relationName\":\"RoleRequestToUser\"}],\"dbName\":null},\"RoleRequest\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"RoleRequestToUser\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"RoleRequestStatus\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

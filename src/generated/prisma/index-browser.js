@@ -133,7 +133,8 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   username: 'username',
   password: 'password',
-  role: 'role'
+  role: 'role',
+  googleId: 'googleId'
 };
 
 exports.Prisma.RoleRequestScalarFieldEnum = {
@@ -151,6 +152,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.Role = exports.$Enums.Role = {
   READER: 'READER',
