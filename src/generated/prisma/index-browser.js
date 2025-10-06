@@ -132,7 +132,15 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   username: 'username',
-  password: 'password'
+  password: 'password',
+  role: 'role'
+};
+
+exports.Prisma.RoleRequestScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  userId: 'userId',
+  status: 'status'
 };
 
 exports.Prisma.SortOrder = {
@@ -144,11 +152,22 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.Role = exports.$Enums.Role = {
+  READER: 'READER',
+  WRITER: 'WRITER',
+  ADMIN: 'ADMIN'
+};
 
+exports.RoleRequestStatus = exports.$Enums.RoleRequestStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED'
+};
 
 exports.Prisma.ModelName = {
   Article: 'Article',
-  User: 'User'
+  User: 'User',
+  RoleRequest: 'RoleRequest'
 };
 
 /**
