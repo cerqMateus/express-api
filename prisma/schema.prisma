@@ -15,8 +15,17 @@ datasource db {
 }
 
 model Article {
-  id Int @id @default(autoincrement())
-  title String
-  content String
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
   createdAt DateTime @default(now())
+  Author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+model User {
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  username String
+  password String
+  articles Article[]
 }

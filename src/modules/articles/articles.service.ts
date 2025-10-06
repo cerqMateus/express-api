@@ -6,9 +6,17 @@ export async function getArticles() {
     return prisma.article.findMany()
 }
 
-export async function createArticle(data: { title: string; content: string }) {
+export async function createArticle(data: { title: string; content: string; authorId: number }) {
     return prisma.article.create({
-        data
+        data: {
+            title: data.title,
+            content: data.content,
+            Author: {
+                connect: {
+                    id: data.authorId
+                }
+            }
+        }
     });
 }
 

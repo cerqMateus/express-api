@@ -124,7 +124,15 @@ exports.Prisma.ArticleScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  authorId: 'authorId'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  username: 'username',
+  password: 'password'
 };
 
 exports.Prisma.SortOrder = {
@@ -139,7 +147,8 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Article: 'Article'
+  Article: 'Article',
+  User: 'User'
 };
 
 /**
