@@ -1,11 +1,13 @@
 import { Router } from "express";
 import { getArticlesHandler, createArticleHandler, getArticleByIdHandler, deleteArticleHandler, updateArticleHandler, } from "./articles.controller.js";
-const router = Router();
+import { authenticate } from "../../middleware/authenticate.js";
 
-router.get("/", getArticlesHandler);
-router.post("/", createArticleHandler);
-router.get("/:id", getArticleByIdHandler);
-router.put("/:id", updateArticleHandler);
-router.delete("/:id", deleteArticleHandler);
+const articlesRouter = Router();
 
-export default router;
+articlesRouter.get("/", getArticlesHandler);
+articlesRouter.get("/:id", getArticleByIdHandler);
+articlesRouter.post("/", authenticate, createArticleHandler);
+articlesRouter.put("/:id", authenticate, updateArticleHandler);
+articlesRouter.delete("/:id", authenticate, deleteArticleHandler);
+
+export default articlesRouter;
